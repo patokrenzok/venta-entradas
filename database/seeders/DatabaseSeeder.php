@@ -14,11 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+       if(config('app.env') === 'local'){
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+       }
+
+       $this->call([
+           PaymentMethodSeeder::class,
+           RoleSeeder::class
+       ]);
     }
 }
