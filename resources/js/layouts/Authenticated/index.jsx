@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {styled, createTheme, ThemeProvider} from '@mui/material/styles';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
@@ -23,13 +23,13 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-import {Link} from 'wouter';
+import { Link } from 'wouter';
 
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({theme, open}) => ({
+  shouldForwardProp: prop => prop !== 'open',
+})(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
@@ -45,35 +45,35 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
-  ({theme, open}) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: prop => prop !== 'open',
+})(({ theme, open }) => ({
+  '& .MuiDrawer-paper': {
+    position: 'relative',
+    whiteSpace: 'nowrap',
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: 'border-box',
+    ...(!open && {
+      overflowX: 'hidden',
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
+      width: theme.spacing(7),
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
 
 const mdTheme = createTheme();
 
-export function Index({children}) {
+export function Index({ children }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -81,7 +81,7 @@ export function Index({children}) {
 
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{display: 'flex'}}>
+      <Box sx={{ display: 'flex' }}>
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
@@ -95,23 +95,23 @@ export function Index({children}) {
               onClick={toggleDrawer}
               sx={{
                 marginRight: '36px',
-                ...(open && {display: 'none'}),
+                ...(open && { display: 'none' }),
               }}
             >
-              <MenuIcon/>
+              <MenuIcon />
             </IconButton>
             <Typography
               component="h1"
               variant="h6"
               color="inherit"
               noWrap
-              sx={{flexGrow: 1}}
+              sx={{ flexGrow: 1 }}
             >
               Dashboard
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon/>
+                <NotificationsIcon />
               </Badge>
             </IconButton>
           </Toolbar>
@@ -126,69 +126,39 @@ export function Index({children}) {
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon/>
+              <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
-          <Divider/>
+          <Divider />
           <List component="nav">
             <ListItemButton>
               <ListItemIcon>
-                <DashboardIcon/>
+                <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" as={Link} to="/dashboard"/>
+              <ListItemText primary="Dashboard" as={Link} to="/dashboard" />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
-                <ShoppingCartIcon/>
+                <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary="Orders"/>
+              <ListItemText primary="Ventas" as={Link} to="/transactions" />
             </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <PeopleIcon/>
-              </ListItemIcon>
-              <ListItemText primary="Customers"/>
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <BarChartIcon/>
-              </ListItemIcon>
-              <ListItemText primary="Reports"/>
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <LayersIcon/>
-              </ListItemIcon>
-              <ListItemText primary="Integrations"/>
-            </ListItemButton>
-            <Divider sx={{my: 1}}/>
+            <Divider sx={{ my: 1 }} />
             <ListSubheader component="div" inset>
-              Saved reports
+              Configuraciones
             </ListSubheader>
             <ListItemButton>
               <ListItemIcon>
-                <AssignmentIcon/>
+                <PeopleIcon />
               </ListItemIcon>
-              <ListItemText primary="Current month"/>
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <AssignmentIcon/>
-              </ListItemIcon>
-              <ListItemText primary="Last quarter"/>
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <AssignmentIcon/>
-              </ListItemIcon>
-              <ListItemText primary="Year-end sale"/>
+              <ListItemText primary="Usuarios" as={Link} to="/users" />
             </ListItemButton>
           </List>
         </Drawer>
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
+            backgroundColor: theme =>
               theme.palette.mode === 'light'
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
@@ -197,8 +167,8 @@ export function Index({children}) {
             overflow: 'auto',
           }}
         >
-          <Toolbar/>
-          <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+          <Toolbar />
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             {children}
           </Container>
         </Box>
