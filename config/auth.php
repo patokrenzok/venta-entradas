@@ -2,6 +2,11 @@
 
 return [
 
+    'superadmin' => [
+      'email' => env('SUPERADMIN_EMAIL', 'xxxxxx'),
+      'password' => env('SUPERADMIN_PASSWORD', 'xxxxxx')
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults

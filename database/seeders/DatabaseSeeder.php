@@ -14,13 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       if(config('app.env') === 'local'){
-
-       }
 
        $this->call([
+           RoleSeeder::class,
+           UserSeeder::class,
            PaymentMethodSeeder::class,
-           RoleSeeder::class
        ]);
     }
 }
