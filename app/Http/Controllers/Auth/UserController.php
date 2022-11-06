@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    public function register(RegisterRequest $request): JsonResponse{
+    public function register(RegisterRequest $request): JsonResponse
+    {
         $validated = $request->validated();
         $user = User::create($validated);
 
@@ -25,12 +26,13 @@ class UserController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function login(LoginRequest $request): JsonResponse{
+    public function login(LoginRequest $request): JsonResponse
+    {
         $validated = $request->validated();
 
         $user = User::where('email', $validated['email'])->get()->first();
 
-        if(!$user || !Hash::check($validated['password'], $user->password)){
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             return new JsonResponse('Credenciales inválidas', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -39,15 +41,17 @@ class UserController extends Controller
         return new JsonResponse([
             'user' => $user,
             'token' => $token
-        ], Response::HTTP_CREATED);
+        ], Response::HTTP_OK);
     }
 
-    public function logout(): JsonResponse{
+    public function logout(): JsonResponse
+    {
         Auth::user()->currentAccessToken()->delete();
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function me(): JsonResponse{
+    public function me(): JsonResponse
+    {
         $user = Auth::user();
         $user->load('role');
 

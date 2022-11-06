@@ -3,4 +3,4 @@ module.exports = {
   '**/*.php': [
     './vendor/bin/sail php artisan fixer:fix --config .php_cs-fixer.php --allow-risky=yes -vvv',
   ],
-}
+};

@@ -1,8 +1,8 @@
-export const Guest = ({ children }) => {
+export const Index = ({children}) => {
   return (
     <div>
       <p>Guest layout</p>
       {children}
     </div>
-  )
-}
+  );
+};
