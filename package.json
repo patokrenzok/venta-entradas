@@ -35,5 +35,10 @@
     "react-hook-form": "^7.39.1",
     "recharts": "^2.1.16",
     "wouter": "^2.8.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
