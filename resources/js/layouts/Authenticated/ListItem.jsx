@@ -1,7 +1,7 @@
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Link } from 'wouter';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export const ListItem = ({ icon, text, url }) => {

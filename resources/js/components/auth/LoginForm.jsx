@@ -11,20 +11,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Copyright } from '@/components/Copyright';
 import { useForm } from 'react-hook-form';
-import { useAuthContext } from '@/hooks/useAuthContext';
-import AuthApi from '@/api/AuthApi';
-import { useLocation } from 'wouter';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthProvider';
 
 export function LoginForm() {
   const { register, handleSubmit } = useForm();
-  const { setAuth } = useAuthContext();
-  const [, navigate] = useLocation();
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
   const onSubmit = data => {
-    AuthApi.login(data).then(res => {
-      setAuth(res.data.user);
-      localStorage.setItem('app-token', res.data.token);
-      navigate('/dashboard');
+    login(data).then(() => {
+      navigate(state?.path || '/dashboard');
     });
   };
 

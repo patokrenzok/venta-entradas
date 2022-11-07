@@ -1,8 +1,12 @@
-import axios from 'axios';
+import axiosIntance from '@/api/apiHelper';
 
 class AuthApi {
   login(data) {
-    return axios.post('/api/login', data);
+    return axiosIntance.post('/login', data);
+  }
+
+  me() {
+    return axiosIntance.get('/me');
   }
 }
 
