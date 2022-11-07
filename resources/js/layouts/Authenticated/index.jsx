@@ -1,12 +1,13 @@
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
+import { Outlet } from 'react-router-dom';
 import { Copyright } from '@/components/Copyright';
 import { useState } from 'react';
 import { Sidebar } from '@/layouts/Authenticated/Sidebar';
 import { Header } from '@/layouts/Authenticated/Header';
 
-export function Index({ children }) {
+export function Index() {
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -27,7 +28,7 @@ export function Index({ children }) {
       >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          {children}
+          <Outlet />
         </Container>
         <Copyright sx={{ marginTop: 'auto', marginBottom: 0 }} />
       </Box>
