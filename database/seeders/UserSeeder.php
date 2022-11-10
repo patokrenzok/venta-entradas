@@ -15,13 +15,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-      //create the superadmin
-      $user = User::create([
-        'name' => 'SuperAdmin',
-        'email' => config('auth.superadmin.email'),
-        'password' => config('auth.superadmin.password'),
-         'role_id' => 1
-      ]);
+        //create the superadmin
+        $user = User::create([
+            'name' => 'SuperAdmin',
+            'email' => config('auth.superadmin.email'),
+            'password' => config('auth.superadmin.password'),
+            'role_id' => 1,
+        ]);
 
         $token = $user->createToken(config('app.name'))->plainTextToken;
         error_log($token);
