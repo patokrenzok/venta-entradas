@@ -19,7 +19,7 @@ class RegisterRequest extends FormRequest
         $user = Auth::user();
         $roleId = $user->role?->id;
 
-        return in_array($roleId, [1,2]);
+        return in_array($roleId, [1, 2]);
     }
 
     /**
@@ -33,7 +33,7 @@ class RegisterRequest extends FormRequest
             'name' => ['string', 'required', 'max:100'],
             'email' => ['string', 'required', 'max:100', 'email', 'unique:users,email'],
             'password' => ['string', 'required', 'confirmed', 'min:8'],
-            'role_id' => ['numeric', 'required', 'exists:roles,id']
+            'role_id' => ['numeric', 'required', 'exists:roles,id'],
         ];
     }
 }
