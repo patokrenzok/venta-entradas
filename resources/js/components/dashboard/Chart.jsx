@@ -1,11 +1,18 @@
 import * as React from 'react';
-import {useTheme} from '@mui/material/styles';
-import {LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer} from 'recharts'; //TODO: replace this library
-import Title from './Title';
+import { useTheme } from '@mui/material/styles';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Label,
+  ResponsiveContainer,
+} from 'recharts'; //TODO: replace this library
+import Title from '@/components/common/Title';
 
 // Generate Sales Data
 function createData(time, amount) {
-  return {time, amount};
+  return { time, amount };
 }
 
 const data = [

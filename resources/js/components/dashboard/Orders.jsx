@@ -5,11 +5,11 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Title from './Title';
+import Title from '@/components/common/Title';
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return {id, date, name, shipTo, paymentMethod, amount};
+  return { id, date, name, shipTo, paymentMethod, amount };
 }
 
 const rows = [
@@ -19,7 +19,7 @@ const rows = [
     'Elvis Presley',
     'Tupelo, MS',
     'VISA ⠀•••• 3719',
-    312.44,
+    312.44
   ),
   createData(
     1,
@@ -27,16 +27,23 @@ const rows = [
     'Paul McCartney',
     'London, UK',
     'VISA ⠀•••• 2574',
-    866.99,
+    866.99
   ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
+  createData(
+    2,
+    '16 Mar, 2019',
+    'Tom Scholz',
+    'Boston, MA',
+    'MC ⠀•••• 1253',
+    100.81
+  ),
   createData(
     3,
     '16 Mar, 2019',
     'Michael Jackson',
     'Gary, IN',
     'AMEX ⠀•••• 2000',
-    654.39,
+    654.39
   ),
   createData(
     4,
@@ -44,7 +51,7 @@ const rows = [
     'Bruce Springsteen',
     'Long Branch, NJ',
     'VISA ⠀•••• 5919',
-    212.79,
+    212.79
   ),
 ];
 
@@ -67,7 +74,7 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map(row => (
             <TableRow key={row.id}>
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.name}</TableCell>
@@ -78,7 +85,7 @@ export default function Orders() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{mt: 3}}>
+      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
         See more orders
       </Link>
     </React.Fragment>
