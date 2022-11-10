@@ -11,9 +11,11 @@ export const BaseIconButton = ({ onClick, tooltipText, icon, ...rest }) => {
 
   return (
     <Tooltip title={tooltipText || ''}>
-      <MuiIconButton onClick={handleClick} {...rest}>
-        <Icon />
-      </MuiIconButton>
+      <span>
+        <MuiIconButton onClick={handleClick} {...rest}>
+          <Icon />
+        </MuiIconButton>
+      </span>
     </Tooltip>
   );
 };
