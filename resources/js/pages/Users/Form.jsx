@@ -6,23 +6,39 @@ import Container from '@mui/material/Container';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Title from '@/components/common/Title';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import UsersApi from '@/api/UsersApi';
 import { Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 export const UserForm = () => {
-  // const {userId} = useParams();
-  const { register, handleSubmit, control, reset } = useForm();
+  const { userId } = useParams();
   const navigate = useNavigate();
   const { data: roles } = useQuery({
     queryKey: ['roles'],
     queryFn: UsersApi.getRoles,
     refetchOnWindowFocus: false,
   });
+  const { data: existingUser } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      if (userId) {
+        return await UsersApi.getOne(userId);
+      }
+    },
+  });
 
-  const onSubmit = data => {
+  const { register, handleSubmit, control, reset } = useForm({
+    defaultValues: existingUser,
+  });
+
+  useEffect(() => {
+    reset(existingUser);
+  }, [existingUser]);
+
+  const onCreate = data => {
     UsersApi.create(data)
       .then(() => {
         toast.success('Usuario creado');
@@ -31,6 +47,26 @@ export const UserForm = () => {
       .catch(() => {
         toast.error('Algo salio mal');
       });
+  };
+
+  const onUpdate = data => {
+    UsersApi.update(data, userId)
+      .then(() => {
+        toast.success('Actualización exitosa');
+        reset();
+      })
+      .catch(() => {
+        toast.error('Algo salio mal');
+      });
+  };
+
+  const onSubmit = data => {
+    if (userId) {
+      onUpdate(data);
+      return;
+    }
+
+    onCreate(data);
   };
 
   return (
@@ -47,7 +83,7 @@ export const UserForm = () => {
               autoComplete="name"
               autoFocus
               fullWidth
-              {...register('name', { required: false })}
+              {...register('name', { required: true })}
             />
           </Grid>
           <Grid item xs={6}>
@@ -56,7 +92,7 @@ export const UserForm = () => {
               label="Correo electrónico"
               autoComplete="email"
               fullWidth
-              {...register('email', { required: false })}
+              {...register('email', { required: true })}
             />
           </Grid>
           <Grid item xs={6}>
@@ -100,7 +136,7 @@ export const UserForm = () => {
               Cancelar
             </Button>
             <Button variant="contained" type="submit">
-              Crear usuario
+              {existingUser ? 'Guardar cambios' : 'Crear Usuario'}
             </Button>
           </Grid>
         </Grid>

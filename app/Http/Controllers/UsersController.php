@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +23,19 @@ class UsersController extends Controller
         $user = User::create($validated);
 
         return new JsonResponse($user, Response::HTTP_CREATED);
+    }
+
+    public function show(User $user): JsonResponse
+    {
+        return new JsonResponse($user, Response::HTTP_OK);
+    }
+
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
+    {
+        $validated = $request->validated();
+        $user->update($validated);
+
+        return new JsonResponse($user, Response::HTTP_OK);
     }
 
     public function destroy(User $user): JsonResponse
