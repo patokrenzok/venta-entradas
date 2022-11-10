@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Auth\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,10 @@ use \App\Http\Controllers\Auth\UserController;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/register', [UserController::class, 'register'])->name('auth.register');
     Route::delete('/logout', [UserController::class, 'logout'])->name('auth.logout');
-
     Route::get('/me', [UserController::class, 'me'])->name('auth.me');
+
+    Route::apiResource('users', UsersController::class);
+    Route::apiResource('roles', RolesController::class);
 });
 
 Route::post('/login', [UserController::class, 'login'])->name('auth.login');
-
