@@ -30,7 +30,11 @@ export const UsersList = () => {
       .catch(() => toast.error('Algo salio mal'));
   };
 
-  const handleActivateUser = userId => {};
+  const handleActivateUser = userId => {
+    UsersApi.enable(userId)
+      .then(() => toast.success('Usuario activado exitosamente'))
+      .catch(() => toast.error('Algo salio mal'));
+  };
 
   return (
     <Grid container spacing={2}>

@@ -13,6 +13,7 @@ import { Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 export const UserForm = () => {
+  // const {userId} = useParams();
   const { register, handleSubmit, control, reset } = useForm();
   const navigate = useNavigate();
   const { data: roles } = useQuery({
@@ -27,7 +28,7 @@ export const UserForm = () => {
         toast.success('Usuario creado');
         reset();
       })
-      .catch(err => {
+      .catch(() => {
         toast.error('Algo salio mal');
       });
   };

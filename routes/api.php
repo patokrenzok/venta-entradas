@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [UserController::class, 'me'])->name('auth.me');
 
     Route::apiResource('users', UsersController::class);
+    Route::post('users/{user}', [UsersController::class, 'enable']);
     Route::apiResource('roles', RolesController::class);
 });
 

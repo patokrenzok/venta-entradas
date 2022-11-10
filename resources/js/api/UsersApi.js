@@ -16,6 +16,11 @@ class UsersApi {
     return response.data;
   }
 
+  async enable(userId) {
+    const response = await axiosIntance.post(`/users/${userId}`);
+    return response.data;
+  }
+
   async getRoles() {
     const response = await axiosIntance.get('/roles');
     return response.data;
