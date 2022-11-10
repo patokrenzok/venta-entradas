@@ -17,7 +17,7 @@ import { ActivateButton } from '@/components/common/IconButtons/ActivateButton';
 import { useAuth } from '@/context/AuthProvider';
 
 export const UsersList = () => {
-  const { user: loggedUser } = useAuth();
+  const { auth } = useAuth();
   const { isLoading, data } = useQuery({
     queryKey: ['users'],
     queryFn: UsersApi.get,
@@ -45,7 +45,7 @@ export const UsersList = () => {
           component={Link}
           to="/users/add"
         >
-          Crear usuario
+          Nuevo usuario
         </Button>
       </Grid>
       <Grid item xs={12}>
@@ -82,12 +82,11 @@ export const UsersList = () => {
                           onClick={() => handleActivateUser(user.id)}
                         />
                       ) : (
-                        loggedUser?.id !== user.id && (
-                          <DeactivateButton
-                            tooltipText="Desactivar usuario"
-                            onClick={() => handleDeleteUser(user.id)}
-                          />
-                        )
+                        <DeactivateButton
+                          tooltipText="Desactivar usuario"
+                          onClick={() => handleDeleteUser(user.id)}
+                          disabled={auth?.id === user.id}
+                        />
                       )}
                     </TableCell>
                   </TableRow>
