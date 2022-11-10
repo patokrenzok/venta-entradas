@@ -11,6 +11,11 @@ class UsersApi {
     return response.data;
   }
 
+  async delete(userId) {
+    const response = await axiosIntance.delete(`/users/${userId}`);
+    return response.data;
+  }
+
   async getRoles() {
     const response = await axiosIntance.get('/roles');
     return response.data;

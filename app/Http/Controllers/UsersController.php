@@ -13,7 +13,7 @@ class UsersController extends Controller
 {
     public function index(): JsonResponse
     {
-        return new JsonResponse(User::all(), Response::HTTP_OK);
+        return new JsonResponse(User::with('role')->withTrashed()->get(), Response::HTTP_OK);
     }
 
     public function store(StoreUserRequest $request): JsonResponse
@@ -25,9 +25,8 @@ class UsersController extends Controller
         return new JsonResponse($user, Response::HTTP_CREATED);
     }
 
-    public function destroy(): JsonResponse
+    public function destroy(User $user): JsonResponse
     {
-        $user = Auth::user();
         $user->delete();
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);

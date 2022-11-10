@@ -40,8 +40,10 @@ function App() {
                   <Route exact path="sell-tickets" element={<SellTickets />} />
 
                   <Route path="users">
-                    <Route path="" element={<UsersList />}></Route>
-                    <Route path="add" element={<UserForm />}></Route>
+                    <Route path="" element={<UsersList />} />
+                    <Route path="add" element={<UserForm />}>
+                      <Route path=":userId" element={<UserForm />} />
+                    </Route>
                   </Route>
                 </Route>
               </Route>
