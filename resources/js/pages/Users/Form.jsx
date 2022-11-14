@@ -1,32 +1,37 @@
-import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Title from '@/components/common/Title';
 import Button from '@mui/material/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import UsersApi from '@/api/UsersApi';
-import { Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { Loader } from '@/components/common/Loader';
 import { useGetUser } from '@/hooks/users/useGetUser';
 import { useGetRoles } from '@/hooks/users/useGetRoles';
 import { Box } from '@/components/common/Box';
+import { Select } from '@/components/common/Inputs/Select';
+import { TextField } from '@/components/common/Inputs/TextField';
 
 export const UserForm = () => {
   const { userId } = useParams();
   const existingUser = useGetUser(userId);
   const navigate = useNavigate();
   const roles = useGetRoles();
-  const { register, handleSubmit, control, reset } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: existingUser,
   });
   const { mutate, isLoading } = useMutation(
     userId ? UsersApi.update : UsersApi.create
   );
+
+  useEffect(() => {
+    if (existingUser) {
+      reset(existingUser);
+    }
+  }, [existingUser]);
 
   const onSubmit = data => {
     data.id = userId;
@@ -43,12 +48,6 @@ export const UserForm = () => {
     });
   };
 
-  useEffect(() => {
-    if (existingUser) {
-      reset(existingUser);
-    }
-  }, [existingUser]);
-
   return (
     <Container maxWidth="md">
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -59,54 +58,28 @@ export const UserForm = () => {
           </Grid>
           <Grid item xs={6}>
             <TextField
+              control={control}
+              name="name"
+              labelText="Nombre"
               required
-              label="Nombre"
-              autoComplete="name"
-              autoFocus
-              fullWidth
-              {...register('name', { required: true })}
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
+              control={control}
+              name="email"
+              labelText="Correo electrónico"
               required
-              label="Correo electrónico"
-              autoComplete="email"
-              fullWidth
-              {...register('email', { required: true })}
             />
           </Grid>
           <Grid item xs={6}>
-            <FormControl fullWidth>
-              <InputLabel id="role_id">Rol</InputLabel>
-              <Controller
-                control={control}
-                name="role_id"
-                render={({ field: { onChange, onBlur, value, name, ref } }) => (
-                  <Select
-                    required
-                    labelId="role_id"
-                    label="Rol"
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    inputRef={ref}
-                    value={value || ''}
-                    name={name}
-                  >
-                    {roles?.length > 0 &&
-                      roles.map((role, i) => (
-                        <MenuItem
-                          value={role.id}
-                          key={role.id}
-                          selected={i === 0}
-                        >
-                          {role.name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                )}
-              />
-            </FormControl>
+            <Select
+              control={control}
+              data={roles}
+              name="role_id"
+              labelText="Rol"
+              required
+            />
           </Grid>
           <Grid item xs={12}>
             <Button

@@ -22,7 +22,20 @@ const root = createRoot(element);
 
 const queryClient = new QueryClient();
 
-const theme = createTheme();
+const theme = createTheme({
+  components: {
+    MuiFormLabel: {
+      styleOverrides: {
+        asterisk: {
+          color: '#db3131',
+          '&$error': {
+            color: '#db3131',
+          },
+        },
+      },
+    },
+  },
+});
 
 function App() {
   return (
