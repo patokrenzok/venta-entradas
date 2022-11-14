@@ -16,8 +16,8 @@ class UsersApi {
     return response.data;
   }
 
-  async update(data, userId) {
-    const response = await axiosIntance.put(`/users/${userId}`, data);
+  async update(data) {
+    const response = await axiosIntance.put(`/users/${data.id}`, data);
     return response.data;
   }
 

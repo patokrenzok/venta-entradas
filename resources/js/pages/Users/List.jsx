@@ -3,7 +3,6 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
-import Paper from '@mui/material/Paper';
 import { useQuery } from 'react-query';
 import UsersApi from '@/api/UsersApi';
 import Button from '@mui/material/Button';
@@ -15,6 +14,8 @@ import { DeactivateButton } from '@/components/common/IconButtons/DeactivateButt
 import { EditButton } from '@/components/common/IconButtons/EditButton';
 import { ActivateButton } from '@/components/common/IconButtons/ActivateButton';
 import { useAuth } from '@/context/AuthProvider';
+import { Loader } from '@/components/common/Loader';
+import { Box } from '@/components/common/Box';
 
 export const UsersList = () => {
   const { auth } = useAuth();
@@ -49,8 +50,8 @@ export const UsersList = () => {
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <Paper>
-          {isLoading && 'Cargando...'}
+        <Box>
+          {isLoading && <Loader />}
           <Table>
             <TableHead>
               <TableRow>
@@ -93,7 +94,7 @@ export const UsersList = () => {
                 ))}
             </TableBody>
           </Table>
-        </Paper>
+        </Box>
       </Grid>
     </Grid>
   );

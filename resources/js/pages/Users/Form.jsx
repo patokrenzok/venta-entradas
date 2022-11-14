@@ -1,4 +1,3 @@
-import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Grid';
@@ -7,71 +6,53 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Title from '@/components/common/Title';
 import Button from '@mui/material/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import UsersApi from '@/api/UsersApi';
 import { Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import { Loader } from '@/components/common/Loader';
+import { useGetUser } from '@/hooks/users/useGetUser';
+import { useGetRoles } from '@/hooks/users/useGetRoles';
+import { Box } from '@/components/common/Box';
 
 export const UserForm = () => {
   const { userId } = useParams();
+  const existingUser = useGetUser(userId);
   const navigate = useNavigate();
-  const { data: roles } = useQuery({
-    queryKey: ['roles'],
-    queryFn: UsersApi.getRoles,
-    refetchOnWindowFocus: false,
-  });
-  const { data: existingUser } = useQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      if (userId) {
-        return await UsersApi.getOne(userId);
-      }
-    },
-  });
-
+  const roles = useGetRoles();
   const { register, handleSubmit, control, reset } = useForm({
     defaultValues: existingUser,
   });
-
-  useEffect(() => {
-    reset(existingUser);
-  }, [existingUser]);
-
-  const onCreate = data => {
-    UsersApi.create(data)
-      .then(() => {
-        toast.success('Usuario creado');
-        reset();
-      })
-      .catch(() => {
-        toast.error('Algo salio mal');
-      });
-  };
-
-  const onUpdate = data => {
-    UsersApi.update(data, userId)
-      .then(() => {
-        toast.success('Actualización exitosa');
-        reset();
-      })
-      .catch(() => {
-        toast.error('Algo salio mal');
-      });
-  };
+  const { mutate, isLoading } = useMutation(
+    userId ? UsersApi.update : UsersApi.create
+  );
 
   const onSubmit = data => {
-    if (userId) {
-      onUpdate(data);
-      return;
-    }
-
-    onCreate(data);
+    data.id = userId;
+    mutate(data, {
+      onSuccess: () => {
+        toast.success(
+          `Usuario ${userId ? 'actualizado' : 'creado'} exitosamente`
+        );
+        if (!userId) {
+          navigate(-1);
+        }
+      },
+      onError: () => toast.error('Lo sentimos, algo salió mal'),
+    });
   };
+
+  useEffect(() => {
+    if (existingUser) {
+      reset(existingUser);
+    }
+  }, [existingUser]);
 
   return (
     <Container maxWidth="md">
-      <Paper component="form" onSubmit={handleSubmit(onSubmit)}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        {isLoading && <Loader />}
         <Grid container padding={2} spacing={2}>
           <Grid item xs={12}>
             <Title>Nuevo usuario</Title>
@@ -140,7 +121,7 @@ export const UserForm = () => {
             </Button>
           </Grid>
         </Grid>
-      </Paper>
+      </Box>
     </Container>
   );
 };

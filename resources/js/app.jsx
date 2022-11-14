@@ -7,6 +7,7 @@ import { AuthProvider } from '@/context/AuthProvider';
 import { RequireAuth } from '@/routes/RequireAuth';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
+import { createTheme, ThemeProvider } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { LoginPage } from '@/pages/Login';
@@ -21,34 +22,42 @@ const root = createRoot(element);
 
 const queryClient = new QueryClient();
 
+const theme = createTheme();
+
 function App() {
   return (
     <StrictMode>
       <CssBaseline />
       <AuthProvider>
         <QueryClientProvider client={queryClient}>
-          <ToastContainer />
-          <Router>
-            <Routes>
-              {/*Public routes*/}
-              <Route exact path="login" element={<LoginPage />} />
+          <ToastContainer autoClose={3000} />
+          <ThemeProvider theme={theme}>
+            <Router>
+              <Routes>
+                {/*Public routes*/}
+                <Route exact path="login" element={<LoginPage />} />
 
-              {/*Protected routes*/}
-              <Route element={<RequireAuth />}>
-                <Route element={<AuthenticatedLayout />}>
-                  <Route exact path="dashboard" element={<Dashboard />} />
-                  <Route exact path="sell-tickets" element={<SellTickets />} />
+                {/*Protected routes*/}
+                <Route element={<RequireAuth />}>
+                  <Route element={<AuthenticatedLayout />}>
+                    <Route exact path="dashboard" element={<Dashboard />} />
+                    <Route
+                      exact
+                      path="sell-tickets"
+                      element={<SellTickets />}
+                    />
 
-                  <Route path="users">
-                    <Route path="" element={<UsersList />} />
-                    <Route path="add" element={<UserForm />}>
-                      <Route path=":userId" element={<UserForm />} />
+                    <Route path="users">
+                      <Route path="" element={<UsersList />} />
+                      <Route path="add" element={<UserForm />}>
+                        <Route path=":userId" element={<UserForm />} />
+                      </Route>
                     </Route>
                   </Route>
                 </Route>
-              </Route>
-            </Routes>
-          </Router>
+              </Routes>
+            </Router>
+          </ThemeProvider>
         </QueryClientProvider>
       </AuthProvider>
     </StrictMode>
