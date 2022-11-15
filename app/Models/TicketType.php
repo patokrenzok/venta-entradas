@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TicketType extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'price', 'is_public'];
 }

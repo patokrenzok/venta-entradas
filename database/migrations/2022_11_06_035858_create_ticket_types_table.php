@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->float('price');
-            $table->boolean('is_public');
+            $table->boolean('is_public')->default(false);
             $table->timestamps();
         });
     }

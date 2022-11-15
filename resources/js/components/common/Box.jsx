@@ -1,8 +1,13 @@
 import Paper from '@mui/material/Paper';
 
-export const Box = ({ children, style, ...rest }) => {
+export const Box = ({ children, style, component, onSubmit, ...rest }) => {
   return (
-    <Paper {...rest} style={{ position: 'relative', ...style }}>
+    <Paper
+      style={{ position: 'relative', ...style }}
+      component={component}
+      onSubmit={onSubmit}
+      {...rest}
+    >
       {children}
     </Paper>
   );

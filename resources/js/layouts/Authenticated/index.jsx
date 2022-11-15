@@ -27,7 +27,7 @@ export function Index() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
           <Outlet />
         </Container>
         <Copyright sx={{ marginTop: 'auto', marginBottom: 0 }} />

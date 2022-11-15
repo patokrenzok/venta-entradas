@@ -10,6 +10,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import PeopleIcon from '@mui/icons-material/People';
 import PaymentIcon from '@mui/icons-material/Payment';
 import DiscountIcon from '@mui/icons-material/Discount';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import MuiDrawer from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
 
@@ -58,14 +59,19 @@ export const Sidebar = ({ onToggleDrawer, open }) => {
       <List component="nav">
         <ListItem text="Inicio" icon={<DashboardIcon />} url="/dashboard" />
         <ListItem
-          text="Ventas"
+          text="Vender entradas"
           icon={<ShoppingCartIcon />}
-          url="/transactions"
+          url="/tickets/sell"
         />
         <Divider sx={{ my: 1 }} />
         <ListSubheader component="div" inset>
           Configuraciones
         </ListSubheader>
+        <ListItem
+          text="Entradas"
+          icon={<LocalActivityIcon />}
+          url="/tickets/types/add"
+        />
         <ListItem text="Usuarios" icon={<PeopleIcon />} url="/users" />
         <ListItem
           text="Medios de pago"

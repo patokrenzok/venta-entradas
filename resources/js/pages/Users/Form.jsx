@@ -49,52 +49,50 @@ export const UserForm = () => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        {isLoading && <Loader />}
-        <Grid container padding={2} spacing={2}>
-          <Grid item xs={12}>
-            <Title>Nuevo usuario</Title>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              control={control}
-              name="name"
-              labelText="Nombre"
-              required
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              control={control}
-              name="email"
-              labelText="Correo electrónico"
-              required
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Select
-              control={control}
-              data={roles}
-              name="role_id"
-              labelText="Rol"
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="outlined"
-              sx={{ marginRight: '1rem' }}
-              onClick={() => navigate(-1)}
-            >
-              Cancelar
-            </Button>
-            <Button variant="contained" type="submit">
-              {existingUser ? 'Guardar cambios' : 'Crear Usuario'}
-            </Button>
-          </Grid>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+      {isLoading && <Loader />}
+      <Grid container spacing={2} padding={2}>
+        <Grid item xs={12}>
+          <Title>Nuevo usuario</Title>
         </Grid>
-      </Box>
-    </Container>
+        <Grid item xs={6}>
+          <TextField
+            control={control}
+            name="name"
+            labelText="Nombre"
+            required
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            control={control}
+            name="email"
+            labelText="Correo electrónico"
+            required
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Select
+            control={control}
+            data={roles}
+            name="role_id"
+            labelText="Rol"
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="outlined"
+            sx={{ marginRight: '1rem' }}
+            onClick={() => navigate(-1)}
+          >
+            Cancelar
+          </Button>
+          <Button variant="contained" type="submit">
+            {existingUser ? 'Guardar cambios' : 'Crear Usuario'}
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };

@@ -13,9 +13,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LoginPage } from '@/pages/Login';
 import { Index as AuthenticatedLayout } from '@/layouts/Authenticated';
 import { Dashboard } from '@/pages/Dashboard';
-import { SellTickets } from '@/pages/SellTicket';
+import { SellTickets } from '@/pages/Tickets/Sell';
 import { UsersList } from '@/pages/Users/List';
 import { UserForm } from '@/pages/Users/Form';
+import { TicketTypeForm } from '@/pages/Tickets/TicketTypes/Form';
 
 const element = document.getElementById('app');
 const root = createRoot(element);
@@ -32,6 +33,11 @@ const theme = createTheme({
             color: '#db3131',
           },
         },
+      },
+    },
+    MuiButton: {
+      defaultProps: {
+        type: 'submit',
       },
     },
   },
@@ -54,11 +60,12 @@ function App() {
                 <Route element={<RequireAuth />}>
                   <Route element={<AuthenticatedLayout />}>
                     <Route exact path="dashboard" element={<Dashboard />} />
-                    <Route
-                      exact
-                      path="sell-tickets"
-                      element={<SellTickets />}
-                    />
+                    <Route path="tickets">
+                      <Route exact path="sell" element={<SellTickets />} />
+                      <Route path="types">
+                        <Route exact path="add" element={<TicketTypeForm />} />
+                      </Route>
+                    </Route>
 
                     <Route path="users">
                       <Route path="" element={<UsersList />} />

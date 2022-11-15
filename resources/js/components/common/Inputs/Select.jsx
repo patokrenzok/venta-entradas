@@ -17,7 +17,7 @@ export const Select = ({
   return (
     <FormControl fullWidth>
       <InputLabel id={labelId} required={required}>
-        Rol
+        {labelText}
       </InputLabel>
       <Controller
         control={control}

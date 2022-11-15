@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\TicketTypeController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UsersController::class);
     Route::post('users/{user}', [UsersController::class, 'enable']);
     Route::apiResource('roles', RolesController::class);
+    Route::apiResource('ticket-types', TicketTypeController::class);
 });
 
 Route::post('/login', [UserController::class, 'login'])->name('auth.login');
