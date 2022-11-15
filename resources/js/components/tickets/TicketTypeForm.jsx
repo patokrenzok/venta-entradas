@@ -15,16 +15,16 @@ import { toast } from 'react-toastify';
 
 export const TicketTypeForm = () => {
   const { mutate, isLoading } = useMutation(TicketsApi.createTicketType);
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset } = useForm();
   const queryClient = useQueryClient();
 
   const onSubmit = data => {
-    data.is_public = !data.is_public;
     mutate(data, {
       onSuccess: ticketType => {
         queryClient.setQueryData(['ticket-types'], prev =>
           prev.concat(ticketType)
         );
+        reset();
         toast.success('Entrada creada exitosamente');
       },
       onError: () => toast.error('Algo salió mal'),
@@ -55,8 +55,8 @@ export const TicketTypeForm = () => {
           />
         </Grid>
         <Stack direction="row" alignItems="center" padding={2}>
-          <Switch control={control} labelText="Privado" name="is_public" />
-          <Tooltip title="Esta opción permite crear entradas que no estarán disponibles para comprar por el público">
+          <Switch control={control} labelText="Pública" name="is_public" />
+          <Tooltip title="Determina si los clientes podrán comprar esta entrada en el sitio web">
             <InfoIcon color="primary" />
           </Tooltip>
         </Stack>

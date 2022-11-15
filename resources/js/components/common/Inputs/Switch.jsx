@@ -1,7 +1,6 @@
 import { FormControl, FormControlLabel } from '@mui/material';
 import MuiSwitch from '@mui/material/Switch';
 import { Controller } from 'react-hook-form';
-import { useId } from 'react';
 import PropTypes from 'prop-types';
 
 export const Switch = ({
@@ -11,23 +10,18 @@ export const Switch = ({
   labelText = '',
   ...rest
 }) => {
-  const labelId = useId();
-
   return (
     <FormControl fullWidth>
       <Controller
         control={control}
         name={name}
-        render={({ field: { onChange, onBlur, value, name, ref } }) => (
+        render={props => (
           <FormControlLabel
             control={
               <MuiSwitch
                 defaultChecked={defaultChecked}
-                onBlur={onBlur}
-                onChange={onChange}
-                inputRef={ref}
-                value={value || ''}
-                name={name}
+                onChange={e => props.field.onChange(e.target.checked)}
+                checked={props.field.checked}
                 {...rest}
               />
             }
