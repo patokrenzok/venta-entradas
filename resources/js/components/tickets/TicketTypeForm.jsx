@@ -54,13 +54,18 @@ export const TicketTypeForm = () => {
             required
           />
         </Grid>
-        <Grid item xs={2}>
-          <Switch control={control} labelText="Pública" name="is_public" />
-        </Grid>
-        <Grid item xs={2}>
-          <Tooltip title="Determina si los clientes podrán comprar esta entrada en el sitio web">
-            <InfoIcon color="primary" />
-          </Tooltip>
+        <Grid item xs={3}>
+          <Stack flexDirection="row" alignItems="center">
+            <Switch
+              control={control}
+              labelText="Pública"
+              name="is_public"
+              fullWidth={false}
+            />
+            <Tooltip title="Determina si los clientes podrán comprar esta entrada en el sitio web">
+              <InfoIcon color="primary" />
+            </Tooltip>
+          </Stack>
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained">Crear entrada</Button>

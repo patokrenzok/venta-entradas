@@ -8,10 +8,11 @@ export const Switch = ({
   defaultChecked = false,
   name,
   labelText = '',
+  fullWidth = true,
   ...rest
 }) => {
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth={fullWidth}>
       <Controller
         control={control}
         name={name}
@@ -41,4 +42,5 @@ Switch.propTypes = {
   defaultChecked: PropTypes.bool,
   name: PropTypes.string.isRequired,
   labelText: PropTypes.string,
+  fullWidth: PropTypes.bool,
 };
