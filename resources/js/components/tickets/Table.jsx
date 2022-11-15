@@ -11,11 +11,30 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { Box } from '@/components/common/Box';
 import Grid from '@mui/material/Grid';
 import { DeleteButton } from '@/components/common/IconButtons/DeleteButton';
+import { useMutation, useQueryClient } from 'react-query';
+import TicketsApi from '@/api/TicketsApi';
+import { toast } from 'react-toastify';
 
 export const TicketsTable = ({ ...rest }) => {
   const { data: ticketTypes } = useGetTicketTypes();
+  const { mutate } = useMutation(TicketsApi.deleteTicketType);
+  const queryClient = useQueryClient();
 
-  const handleDelete = () => {};
+  const handleDelete = id => {
+    mutate(id, {
+      onSuccess: () => {
+        queryClient.setQueryData(['ticket-types'], prev => {
+          prev.splice(
+            prev.findIndex(x => x.id === id),
+            1
+          );
+          return prev;
+        });
+        toast.success('Entrada eliminada exitosamente');
+      },
+      onError: () => toast.error('Algo salió mal'),
+    });
+  };
 
   return (
     <Box {...rest}>

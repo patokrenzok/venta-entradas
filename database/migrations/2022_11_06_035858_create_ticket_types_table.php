@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->float('price');
             $table->boolean('is_public')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

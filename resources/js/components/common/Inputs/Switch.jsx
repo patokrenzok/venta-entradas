@@ -15,13 +15,16 @@ export const Switch = ({
       <Controller
         control={control}
         name={name}
-        render={props => (
+        defaultValue={defaultChecked}
+        render={({ field }) => (
           <FormControlLabel
             control={
               <MuiSwitch
-                defaultChecked={defaultChecked}
-                onChange={e => props.field.onChange(e.target.checked)}
-                checked={props.field.checked}
+                ref={field.ref}
+                onChange={e => field.onChange(e.target.checked)}
+                checked={field.value}
+                name={name}
+                value={field.value}
                 {...rest}
               />
             }
