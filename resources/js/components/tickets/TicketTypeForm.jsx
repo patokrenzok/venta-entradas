@@ -34,7 +34,7 @@ export const TicketTypeForm = () => {
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       {isLoading && <Loader />}
-      <Grid container spacing={2} padding={2}>
+      <Grid container spacing={2} padding={2} alignItems="center">
         <Grid item xs={12}>
           <Title>Crear entrada</Title>
         </Grid>
@@ -54,12 +54,14 @@ export const TicketTypeForm = () => {
             required
           />
         </Grid>
-        <Stack direction="row" alignItems="center" padding={2}>
+        <Grid item xs={2}>
           <Switch control={control} labelText="Pública" name="is_public" />
+        </Grid>
+        <Grid item xs={2}>
           <Tooltip title="Determina si los clientes podrán comprar esta entrada en el sitio web">
             <InfoIcon color="primary" />
           </Tooltip>
-        </Stack>
+        </Grid>
         <Grid item xs={12}>
           <Button variant="contained">Crear entrada</Button>
         </Grid>
