@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import TicketsApi from '@/api/TicketsApi';
 import MenuItem from '@mui/material/MenuItem';
+import { useGetTicketTypes } from '@/hooks/tickets/useGetTicketTypes';
 
 function renderTicketTypes(data) {
   return data.map(item => (
@@ -19,10 +20,7 @@ function renderTicketTypes(data) {
 }
 
 export const SellTickets = () => {
-  const { data: ticketTypes } = useQuery(
-    ['ticket-types'],
-    TicketsApi.getTicketTypes
-  );
+  const { data: ticketTypes } = useGetTicketTypes();
   const { control } = useForm();
 
   return (

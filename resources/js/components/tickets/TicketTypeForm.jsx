@@ -1,26 +1,32 @@
+import { Loader } from '@/components/common/Loader';
 import { Grid } from '@mui/material';
 import Title from '@/components/common/Title';
-import { Box } from '@/components/common/Box';
-import { useForm } from 'react-hook-form';
 import { TextField } from '@/components/common/Inputs/TextField';
+import Stack from '@mui/material/Stack';
 import { Switch } from '@/components/common/Inputs/Switch';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
-import Stack from '@mui/material/Stack';
-import { useMutation } from 'react-query';
+import Button from '@mui/material/Button';
+import { Box } from '@/components/common/Box';
+import { useMutation, useQueryClient } from 'react-query';
 import TicketsApi from '@/api/TicketsApi';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { Loader } from '@/components/common/Loader';
 
 export const TicketTypeForm = () => {
   const { mutate, isLoading } = useMutation(TicketsApi.createTicketType);
   const { control, handleSubmit } = useForm();
+  const queryClient = useQueryClient();
 
   const onSubmit = data => {
     data.is_public = !data.is_public;
     mutate(data, {
-      onSuccess: () => toast.success('Entrada creada exitosamente'),
+      onSuccess: ticketType => {
+        queryClient.setQueryData(['ticket-types'], prev =>
+          prev.concat(ticketType)
+        );
+        toast.success('Entrada creada exitosamente');
+      },
       onError: () => toast.error('Algo salió mal'),
     });
   };
@@ -51,7 +57,7 @@ export const TicketTypeForm = () => {
         <Stack direction="row" alignItems="center" padding={2}>
           <Switch control={control} labelText="Privado" name="is_public" />
           <Tooltip title="Esta opción permite crear entradas que no estarán disponibles para comprar por el público">
-            <InfoIcon style={{ color: '#1876d2' }} />
+            <InfoIcon color="primary" />
           </Tooltip>
         </Stack>
         <Grid item xs={12}>
