@@ -8,6 +8,15 @@ import { Select } from '@/components/common/Inputs/Select';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import TicketsApi from '@/api/TicketsApi';
+import MenuItem from '@mui/material/MenuItem';
+
+function renderTicketTypes(data) {
+  return data.map(item => (
+    <MenuItem key={item.id} value={item.id}>
+      {item.name} (${Number(item.price).toFixed(2)})
+    </MenuItem>
+  ));
+}
 
 export const SellTickets = () => {
   const { data: ticketTypes } = useQuery(
@@ -22,18 +31,25 @@ export const SellTickets = () => {
         <Grid item xs={12}>
           <Title>Vender entradas</Title>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Select
             control={control}
             name="ticket_type_id"
             labelText="Tipo de entrada"
             data={ticketTypes}
+            render={renderTicketTypes}
+            required
           />
         </Grid>
         <Grid item xs={4}>
-          <TextField control={control} name="quantity" labelText="Cantidad" />
+          <TextField
+            control={control}
+            name="quantity"
+            labelText="Cantidad"
+            required
+          />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Button variant="contained">Agregar</Button>
         </Grid>
         <Grid item xs={12}>

@@ -4,15 +4,25 @@ import { Controller } from 'react-hook-form';
 import { useId } from 'react';
 import PropTypes from 'prop-types';
 
+function renderItems(data = []) {
+  return data.map(item => (
+    <MenuItem value={item.id} key={item.id}>
+      {item.name}
+    </MenuItem>
+  ));
+}
+
 export const Select = ({
   control,
   data,
   name,
   labelText = '',
   required = false,
+  render,
   ...rest
 }) => {
   const labelId = useId();
+  const renderFunction = render || renderItems;
 
   return (
     <FormControl fullWidth>
@@ -34,12 +44,7 @@ export const Select = ({
             name={name}
             {...rest}
           >
-            {data.length > 0 &&
-              data.map((item, i) => (
-                <MenuItem value={item.id} key={item.id} selected={i === 0}>
-                  {item.name}
-                </MenuItem>
-              ))}
+            {data.length > 0 && renderFunction(data)}
           </MuiSelect>
         )}
       />
@@ -52,6 +57,7 @@ Select.propTypes = {
   data: PropTypes.array,
   name: PropTypes.string.isRequired,
   labelText: PropTypes.string,
+  createOption: PropTypes.func,
 };
 
 Select.defaultProps = {
