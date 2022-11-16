@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
 import Title from '@/components/common/Title';
 import Button from '@mui/material/Button';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,8 +13,10 @@ import { useGetRoles } from '@/hooks/users/useGetRoles';
 import { Box } from '@/components/common/Box';
 import { Select } from '@/components/common/Inputs/Select';
 import { TextField } from '@/components/common/Inputs/TextField';
+import { useGetCompanies } from '@/hooks/companies/useGetCompanies';
 
 export const UserForm = () => {
+  const { data: companies } = useGetCompanies();
   const { userId } = useParams();
   const existingUser = useGetUser(userId);
   const navigate = useNavigate();
@@ -82,6 +83,17 @@ export const UserForm = () => {
             required
           />
         </Grid>
+        {companies?.length > 0 && (
+          <Grid item xs={6}>
+            <Select
+              control={control}
+              data={companies}
+              name="company_id"
+              labelText="Empresa"
+              required
+            />
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Button
             variant="outlined"

@@ -37,6 +37,7 @@ class UserController extends Controller
         }
 
         $token = $user->createToken(config('app.name'))->plainTextToken;
+        $user->load('role');
 
         return new JsonResponse([
             'user' => $user,

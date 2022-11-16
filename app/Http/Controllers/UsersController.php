@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Services\UsersService;
 use Illuminate\Http\JsonResponse;
@@ -14,14 +14,14 @@ class UsersController extends Controller
 {
     public function index(): JsonResponse
     {
-        return new JsonResponse(User::with('role')->withTrashed()->get(), Response::HTTP_OK);
+        return new JsonResponse(User::withTrashed()->get(), Response::HTTP_OK);
     }
 
     public function store(StoreUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
         $temporalPass = Str::random();
-        $validated['password'] = bcrypt($temporalPass);
+        $validated['password'] = $temporalPass;
         $user = User::create($validated);
 
         UsersService::sendWelcomeEmail($user, $temporalPass);

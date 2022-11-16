@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTicketTypeRequest;
-use App\Http\Requests\UpdateTicketTypeRequest;
+use App\Http\Requests\Tickets\StoreTicketTypeRequest;
+use App\Http\Requests\Tickets\UpdateTicketTypeRequest;
 use App\Models\TicketType;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TicketTypeController extends Controller

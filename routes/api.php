@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TicketTypeController;
 use App\Http\Controllers\UsersController;
@@ -26,6 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('users/{user}', [UsersController::class, 'enable']);
     Route::apiResource('roles', RolesController::class);
     Route::apiResource('ticket-types', TicketTypeController::class);
+
+    Route::middleware('auth.superadmin')->group(function () {
+        Route::apiResource('companies', CompaniesController::class);
+    });
 });
 
 Route::post('/login', [UserController::class, 'login'])->name('auth.login');

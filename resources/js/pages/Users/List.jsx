@@ -16,8 +16,10 @@ import { ActivateButton } from '@/components/common/IconButtons/ActivateButton';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader } from '@/components/common/Loader';
 import { Box } from '@/components/common/Box';
+import { useIsSuperAdmin } from '@/hooks/useIsSuperAdmin';
 
 export const UsersList = () => {
+  const isSuperAdmin = useIsSuperAdmin();
   const { auth } = useAuth();
   const { isLoading, data } = useQuery({
     queryKey: ['users'],
@@ -59,6 +61,7 @@ export const UsersList = () => {
                 <TableCell>Email</TableCell>
                 <TableCell>Rol</TableCell>
                 <TableCell>Estado</TableCell>
+                {isSuperAdmin && <TableCell>Empresa</TableCell>}
                 <TableCell align="right">Acciones</TableCell>
               </TableRow>
             </TableHead>
@@ -72,6 +75,9 @@ export const UsersList = () => {
                     <TableCell>
                       {user.deleted_at ? 'Inactivo' : 'Activo'}
                     </TableCell>
+                    {isSuperAdmin && (
+                      <TableCell>{user.company?.name}</TableCell>
+                    )}
                     <TableCell align="right">
                       <EditButton
                         tooltipText="Editar usuario"

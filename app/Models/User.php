@@ -14,6 +14,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Multitenancy;
 
+    protected $with = ['role', 'company'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'company_id',
     ];
 
     /**
@@ -34,6 +37,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'company_id',
     ];
 
     /**
@@ -55,5 +59,10 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }

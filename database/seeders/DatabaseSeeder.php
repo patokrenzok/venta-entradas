@@ -19,5 +19,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PaymentMethodSeeder::class,
         ]);
+
+        if (config('app.env') === 'local') {
+            $this->call([
+                CompanySeeder::class,
+            ]);
+        }
     }
 }

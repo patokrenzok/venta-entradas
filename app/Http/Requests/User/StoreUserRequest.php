@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,6 +27,7 @@ class StoreUserRequest extends FormRequest
             'name' => ['string', 'required', 'max:100'],
             'email' => ['string', 'required', 'max:100', 'email', 'unique:users,email'],
             'role_id' => ['numeric', 'required', 'exists:roles,id'],
+            'company_id' => ['numeric', 'nullable', 'exists:companies,id'],
         ];
     }
 }

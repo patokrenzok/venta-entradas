@@ -22,7 +22,7 @@ export function LoginForm() {
 
   const onSubmit = data => {
     login(data).then(() => {
-      navigate(state?.path || '/dashboard');
+      navigate(state?.path || '/');
     });
   };
 
