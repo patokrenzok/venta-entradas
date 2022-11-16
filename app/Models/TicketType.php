@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Multitenancy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TicketType extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Multitenancy;
 
     protected $fillable = ['name', 'price', 'is_public'];
 }

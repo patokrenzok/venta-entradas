@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('name');
             $table->float('price');
             $table->boolean('is_public')->default(false);
+            $table->foreignId('company_id')->references('id')->on('companies');
             $table->timestamps();
             $table->softDeletes();
         });

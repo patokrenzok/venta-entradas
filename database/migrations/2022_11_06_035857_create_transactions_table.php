@@ -14,6 +14,10 @@ return new class extends Migration {
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->morphs('payment_method');
+            $table->integer('placed_via');
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }
