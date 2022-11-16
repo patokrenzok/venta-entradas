@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Services\UsersService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +20,11 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $validated['password'] = bcrypt(Str::random());
+        $temporalPass = Str::random();
+        $validated['password'] = bcrypt($temporalPass);
         $user = User::create($validated);
+
+        UsersService::sendWelcomeEmail($user, $temporalPass);
 
         return new JsonResponse($user, Response::HTTP_CREATED);
     }
