@@ -48,12 +48,14 @@ export const UserForm = () => {
     });
   };
 
+  const title = `${existingUser ? 'Modificar' : 'Crear'} usuario`;
+
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       {isLoading && <Loader />}
       <Grid container spacing={2} padding={2}>
         <Grid item xs={12}>
-          <Title>Nuevo usuario</Title>
+          <Title>{title}</Title>
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -89,7 +91,7 @@ export const UserForm = () => {
             Cancelar
           </Button>
           <Button variant="contained" type="submit">
-            {existingUser ? 'Guardar cambios' : 'Crear Usuario'}
+            {title}
           </Button>
         </Grid>
       </Grid>

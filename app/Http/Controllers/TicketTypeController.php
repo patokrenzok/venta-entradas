@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTicketTypeRequest;
+use App\Http\Requests\UpdateTicketTypeRequest;
 use App\Models\TicketType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,15 +24,17 @@ class TicketTypeController extends Controller
         return new JsonResponse($ticketType, Response::HTTP_CREATED);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(UpdateTicketTypeRequest $request, TicketType $ticketType): JsonResponse
     {
-        //
+        $validated = $request->validated();
+        $ticketType->update($validated);
+
+        return new JsonResponse($ticketType, Response::HTTP_OK);
+    }
+
+    public function show(TicketType $ticketType): JsonResponse
+    {
+        return new JsonResponse($ticketType, Response::HTTP_OK);
     }
 
     public function destroy(TicketType $ticketType): JsonResponse

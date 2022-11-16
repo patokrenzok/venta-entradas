@@ -12,31 +12,43 @@ import { useMutation, useQueryClient } from 'react-query';
 import TicketsApi from '@/api/TicketsApi';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useGetTicketType } from '@/hooks/tickets/useGetTicketType';
+import { useUpdateTicketType } from '@/hooks/tickets/useUpdateTicketType';
 
-export const TicketTypeForm = () => {
-  const { mutate, isLoading } = useMutation(TicketsApi.createTicketType);
-  const { control, handleSubmit, reset } = useForm();
+export const TicketTypeForm = ({ ticketTypeId, setTicketTypeId }) => {
   const queryClient = useQueryClient();
+  const { data: ticketType, isLoading: isLoadingGetTicket } =
+    useGetTicketType(ticketTypeId);
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: ticketType,
+  });
+  useUpdateTicketType(ticketType, reset);
+  const { mutate, isLoading } = useMutation(
+    ticketType ? TicketsApi.updateTicketType : TicketsApi.createTicketType
+  );
 
   const onSubmit = data => {
     mutate(data, {
-      onSuccess: ticketType => {
-        queryClient.setQueryData(['ticket-types'], prev =>
-          prev.concat(ticketType)
+      onSuccess: () => {
+        toast.success(
+          `Entrada ${ticketType ? 'modificada' : 'creada'} exitosamente`
         );
-        reset();
-        toast.success('Entrada creada exitosamente');
+        queryClient.invalidateQueries(['ticket-types']);
+        queryClient.removeQueries(['ticket-type']);
+        setTicketTypeId(null);
       },
       onError: () => toast.error('Algo salió mal'),
     });
   };
 
+  const title = `${ticketType ? 'Modificar' : 'Crear'} entrada`;
+  const loading = isLoading || isLoadingGetTicket;
+
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-      {isLoading && <Loader />}
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} isLoading={loading}>
       <Grid container spacing={2} padding={2} alignItems="center">
         <Grid item xs={12}>
-          <Title>Crear entrada</Title>
+          <Title>{title}</Title>
         </Grid>
         <Grid item xs={4}>
           <TextField
@@ -68,7 +80,19 @@ export const TicketTypeForm = () => {
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <Button variant="contained">Crear entrada</Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              queryClient.removeQueries(['ticket-type']);
+              setTicketTypeId(null);
+              reset(['name', 'price', 'is_public']);
+            }}
+            sx={{ marginRight: '1rem' }}
+            type="button"
+          >
+            Cancelar
+          </Button>
+          <Button variant="contained">{title}</Button>
         </Grid>
       </Grid>
     </Box>

@@ -6,18 +6,20 @@ import {
   TableCell,
 } from '@mui/material';
 import { useGetTicketTypes } from '@/hooks/tickets/useGetTicketTypes';
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
 import { Box } from '@/components/common/Box';
 import Grid from '@mui/material/Grid';
 import { DeleteButton } from '@/components/common/IconButtons/DeleteButton';
+import { EditButton } from '@/components/common/IconButtons/EditButton';
 import { useMutation, useQueryClient } from 'react-query';
 import TicketsApi from '@/api/TicketsApi';
 import { toast } from 'react-toastify';
+import { Loader } from '@/components/common/Loader';
 
-export const TicketsTable = ({ ...rest }) => {
-  const { data: ticketTypes } = useGetTicketTypes();
-  const { mutate } = useMutation(TicketsApi.deleteTicketType);
+export const TicketsTable = ({ handleEdit, ...rest }) => {
+  const { data: ticketTypes, isLoading } = useGetTicketTypes();
+  const { mutate, isLoading: isMutateLoading } = useMutation(
+    TicketsApi.deleteTicketType
+  );
   const queryClient = useQueryClient();
 
   const handleDelete = id => {
@@ -36,8 +38,10 @@ export const TicketsTable = ({ ...rest }) => {
     });
   };
 
+  const loading = isLoading || isMutateLoading;
+
   return (
-    <Box {...rest}>
+    <Box {...rest} isLoading={loading}>
       <Grid container spacing={2} padding={2}>
         <Grid item xs={12}>
           <Table>
@@ -46,8 +50,8 @@ export const TicketsTable = ({ ...rest }) => {
                 <TableCell>#</TableCell>
                 <TableCell>Nombre</TableCell>
                 <TableCell>Precio</TableCell>
-                <TableCell>Es pública</TableCell>
-                <TableCell>Acciones</TableCell>
+                <TableCell>Tipo</TableCell>
+                <TableCell width="115px">Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -60,13 +64,13 @@ export const TicketsTable = ({ ...rest }) => {
                       ${Number(ticketType.price).toFixed(2)}
                     </TableCell>
                     <TableCell>
-                      {ticketType.is_public ? (
-                        <CheckIcon color="primary" />
-                      ) : (
-                        <ClearIcon color="error" />
-                      )}
+                      {ticketType.is_public ? 'Pública' : 'Privada'}
                     </TableCell>
-                    <TableCell align="right" width="5%">
+                    <TableCell align="right">
+                      <EditButton
+                        tooltipText="Editar entrada"
+                        onClick={() => handleEdit(ticketType.id)}
+                      />
                       <DeleteButton
                         tooltipText="Eliminar entrada"
                         onClick={() => handleDelete(ticketType.id)}

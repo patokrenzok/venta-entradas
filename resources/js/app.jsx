@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider } from '@/context/AuthProvider';
 import { RequireAuth } from '@/routes/RequireAuth';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { ToastContainer } from 'react-toastify';
 import { createTheme, ThemeProvider } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.css';
@@ -78,6 +79,7 @@ function App() {
               </Routes>
             </Router>
           </ThemeProvider>
+          <ReactQueryDevtools />
         </QueryClientProvider>
       </AuthProvider>
     </StrictMode>
