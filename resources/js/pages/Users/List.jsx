@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 import { DeactivateButton } from '@/components/common/IconButtons/DeactivateButton';
 import { EditButton } from '@/components/common/IconButtons/EditButton';
 import { ActivateButton } from '@/components/common/IconButtons/ActivateButton';
-import { useAuth } from '@/context/AuthProvider';
+import { useAuth } from '@/hooks/useAuth';
 import { Loader } from '@/components/common/Loader';
 import { Box } from '@/components/common/Box';
 

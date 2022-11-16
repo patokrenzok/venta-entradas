@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { Copyright } from '@/components/Copyright';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthProvider';
+import { useAuth } from '@/hooks/useAuth';
 
 export function LoginForm() {
   const { register, handleSubmit } = useForm();

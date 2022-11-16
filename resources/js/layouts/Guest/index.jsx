@@ -1,8 +1,9 @@
-export const Index = ({children}) => {
+import { Outlet } from '@mui/icons-material';
+
+export const Index = () => {
   return (
     <div>
-      <p>Guest layout</p>
-      {children}
+      <Outlet />
     </div>
   );
 };

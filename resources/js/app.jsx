@@ -4,15 +4,17 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AuthProvider } from '@/context/AuthProvider';
-import { RequireAuth } from '@/routes/RequireAuth';
+import { AuthMiddleware } from '@/routes/AuthMiddleware';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ToastContainer } from 'react-toastify';
 import { createTheme, ThemeProvider } from '@mui/material';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { GuestMiddleware } from '@/routes/GuestMiddleware';
 import { LoginPage } from '@/pages/Login';
 import { Index as AuthenticatedLayout } from '@/layouts/Authenticated';
+import { Index as GuestLayout } from '@/layouts/Guest';
 import { Dashboard } from '@/pages/Dashboard';
 import { SellTickets } from '@/pages/Tickets/Sell';
 import { UsersList } from '@/pages/Users/List';
@@ -55,12 +57,20 @@ function App() {
             <Router>
               <Routes>
                 {/*Public routes*/}
-                <Route exact path="login" element={<LoginPage />} />
+                <Route
+                  element={
+                    <GuestMiddleware>
+                      <GuestLayout />
+                    </GuestMiddleware>
+                  }
+                >
+                  <Route exact path="login" element={<LoginPage />} />
+                </Route>
 
                 {/*Protected routes*/}
-                <Route element={<RequireAuth />}>
+                <Route element={<AuthMiddleware />}>
                   <Route element={<AuthenticatedLayout />}>
-                    <Route exact path="dashboard" element={<Dashboard />} />
+                    <Route exact path="" element={<Dashboard />} />
                     <Route path="tickets">
                       <Route exact path="sell" element={<SellTickets />} />
                       <Route path="types">
