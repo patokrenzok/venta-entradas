@@ -14,7 +14,7 @@ class UsersController extends Controller
 {
     public function index(): JsonResponse
     {
-        return new JsonResponse(User::withTrashed()->get(), Response::HTTP_OK);
+        return new JsonResponse(User::orderBy('company_id')->withTrashed()->get(), Response::HTTP_OK);
     }
 
     public function store(StoreUserRequest $request): JsonResponse

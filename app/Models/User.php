@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Multitenancy;
+use App\Traits\Multitenantable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Multitenancy;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Multitenantable;
 
     protected $with = ['role', 'company'];
 
@@ -37,6 +37,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'role_id',
         'company_id',
     ];
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TicketTypeController;
@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/register', [UserController::class, 'register'])->name('auth.register');
-    Route::delete('/logout', [UserController::class, 'logout'])->name('auth.logout');
-    Route::get('/me', [UserController::class, 'me'])->name('auth.me');
+    Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+    Route::delete('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::get('/me', [AuthController::class, 'me'])->name('auth.me');
 
     Route::apiResource('users', UsersController::class);
     Route::post('users/{user}', [UsersController::class, 'enable']);
@@ -33,4 +33,4 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::post('/login', [UserController::class, 'login'])->name('auth.login');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
