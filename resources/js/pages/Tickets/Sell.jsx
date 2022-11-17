@@ -6,8 +6,6 @@ import { Box } from '@/components/common/Box';
 import { TextField } from '@/components/common/Inputs/TextField';
 import { Select } from '@/components/common/Inputs/Select';
 import { useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
-import TicketsApi from '@/api/TicketsApi';
 import MenuItem from '@mui/material/MenuItem';
 import { useGetTicketTypes } from '@/hooks/tickets/useGetTicketTypes';
 
@@ -25,7 +23,7 @@ export const SellTickets = () => {
 
   return (
     <Box>
-      <Grid container spacing={2} padding={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Title>Vender entradas</Title>
         </Grid>

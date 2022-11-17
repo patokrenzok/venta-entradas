@@ -11,7 +11,7 @@ export const Box = ({
 }) => {
   return (
     <Paper
-      style={{ position: 'relative', ...style }}
+      style={{ position: 'relative', padding: '1rem', ...style }}
       component={component}
       onSubmit={onSubmit}
       {...rest}

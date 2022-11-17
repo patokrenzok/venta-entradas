@@ -43,7 +43,7 @@ export const TicketsTable = ({ handleEdit, ...rest }) => {
 
   return (
     <Box {...rest} isLoading={loading}>
-      <Grid container spacing={2} padding={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Table>
             <TableHead>

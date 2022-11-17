@@ -61,7 +61,7 @@ export const TicketTypeForm = ({ ticketTypeId, setTicketTypeId }) => {
 
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} isLoading={loading}>
-      <Grid container spacing={2} padding={2} alignItems="center">
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs={12}>
           <Title>{title}</Title>
         </Grid>

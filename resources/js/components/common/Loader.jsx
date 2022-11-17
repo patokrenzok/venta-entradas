@@ -8,6 +8,8 @@ export const Loader = () => {
         width: '100%',
         height: '100%',
         position: 'absolute',
+        left: 0,
+        top: 0,
         display: 'grid',
         placeItems: 'center',
         backgroundColor: 'rgba(255,255,255,.7)',

@@ -20,6 +20,7 @@ import { SellTickets } from '@/pages/Tickets/Sell';
 import { UsersList } from '@/pages/Users/List';
 import { UserForm } from '@/pages/Users/Form';
 import { TicketsPage } from '@/pages/Tickets/TicketsPage';
+import { PaymentMethodsList } from '@/pages/PaymentMethods/List';
 
 const element = document.getElementById('app');
 const root = createRoot(element);
@@ -83,6 +84,10 @@ function App() {
                       <Route path="add" element={<UserForm />}>
                         <Route path=":userId" element={<UserForm />} />
                       </Route>
+                    </Route>
+
+                    <Route path="payment-methods">
+                      <Route path="" element={<PaymentMethodsList />} />
                     </Route>
                   </Route>
                 </Route>
