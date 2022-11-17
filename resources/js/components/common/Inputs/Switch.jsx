@@ -23,9 +23,9 @@ export const Switch = ({
               <MuiSwitch
                 ref={field.ref}
                 onChange={e => field.onChange(e.target.checked)}
-                checked={field.value}
+                checked={field.value || false}
                 name={name}
-                value={field.value}
+                value={field.value || false}
                 {...rest}
               />
             }

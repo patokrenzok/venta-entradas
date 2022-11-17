@@ -1,4 +1,3 @@
-import { Loader } from '@/components/common/Loader';
 import { Grid } from '@mui/material';
 import Title from '@/components/common/Title';
 import { TextField } from '@/components/common/Inputs/TextField';
@@ -13,19 +12,36 @@ import TicketsApi from '@/api/TicketsApi';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useGetTicketType } from '@/hooks/tickets/useGetTicketType';
-import { useUpdateTicketType } from '@/hooks/tickets/useUpdateTicketType';
+import { useEffect } from 'react';
 
 export const TicketTypeForm = ({ ticketTypeId, setTicketTypeId }) => {
   const queryClient = useQueryClient();
   const { data: ticketType, isLoading: isLoadingGetTicket } =
     useGetTicketType(ticketTypeId);
-  const { control, handleSubmit, reset } = useForm({
-    defaultValues: ticketType,
-  });
-  useUpdateTicketType(ticketType, reset);
+  const { control, handleSubmit, reset } = useForm();
   const { mutate, isLoading } = useMutation(
     ticketType ? TicketsApi.updateTicketType : TicketsApi.createTicketType
   );
+
+  useEffect(() => {
+    if (ticketType) {
+      const ticket = {
+        ...ticketType,
+        is_public: Boolean(ticketType.is_public),
+      };
+      reset(ticket);
+    }
+  }, [ticketType]);
+
+  const clearForm = () => {
+    queryClient.removeQueries(['ticket-type']);
+    setTicketTypeId(null);
+    reset({
+      name: '',
+      price: '',
+      is_public: false,
+    });
+  };
 
   const onSubmit = data => {
     mutate(data, {
@@ -34,8 +50,7 @@ export const TicketTypeForm = ({ ticketTypeId, setTicketTypeId }) => {
           `Entrada ${ticketType ? 'modificada' : 'creada'} exitosamente`
         );
         queryClient.invalidateQueries(['ticket-types']);
-        queryClient.removeQueries(['ticket-type']);
-        setTicketTypeId(null);
+        clearForm();
       },
       onError: () => toast.error('Algo salió mal'),
     });
@@ -82,11 +97,7 @@ export const TicketTypeForm = ({ ticketTypeId, setTicketTypeId }) => {
         <Grid item xs={12}>
           <Button
             variant="outlined"
-            onClick={() => {
-              queryClient.removeQueries(['ticket-type']);
-              setTicketTypeId(null);
-              reset(['name', 'price', 'is_public']);
-            }}
+            onClick={clearForm}
             sx={{ marginRight: '1rem' }}
             type="button"
           >
