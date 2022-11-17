@@ -3,7 +3,7 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import UsersApi from '@/api/UsersApi';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -21,21 +21,28 @@ import { useIsSuperAdmin } from '@/hooks/useIsSuperAdmin';
 export const UsersList = () => {
   const isSuperAdmin = useIsSuperAdmin();
   const { auth } = useAuth();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { isLoading, data } = useQuery({
     queryKey: ['users'],
     queryFn: UsersApi.get,
   });
-  const navigate = useNavigate();
 
   const handleDeleteUser = userId => {
     UsersApi.delete(userId)
-      .then(() => toast.success('Usuario desactivado exitosamente'))
+      .then(() => {
+        toast.success('Usuario desactivado exitosamente');
+        queryClient.invalidateQueries(['users']);
+      })
       .catch(() => toast.error('Algo salio mal'));
   };
 
   const handleActivateUser = userId => {
     UsersApi.enable(userId)
-      .then(() => toast.success('Usuario activado exitosamente'))
+      .then(() => {
+        toast.success('Usuario activado exitosamente');
+        queryClient.invalidateQueries(['users']);
+      })
       .catch(() => toast.error('Algo salio mal'));
   };
 
