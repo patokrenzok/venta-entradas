@@ -12,7 +12,7 @@ class TicketTypeController extends Controller
 {
     public function index(): JsonResponse
     {
-        return new JsonResponse(TicketType::all(), Response::HTTP_OK);
+        return new JsonResponse(TicketType::query()->orderBy('company_id')->get(), Response::HTTP_OK);
     }
 
     public function store(StoreTicketTypeRequest $request): JsonResponse

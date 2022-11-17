@@ -13,9 +13,10 @@ import { EditButton } from '@/components/common/IconButtons/EditButton';
 import { useMutation, useQueryClient } from 'react-query';
 import TicketsApi from '@/api/TicketsApi';
 import { toast } from 'react-toastify';
-import { Loader } from '@/components/common/Loader';
+import { useIsSuperAdmin } from '@/hooks/useIsSuperAdmin';
 
 export const TicketsTable = ({ handleEdit, ...rest }) => {
+  const isSuperAdmin = useIsSuperAdmin();
   const { data: ticketTypes, isLoading } = useGetTicketTypes();
   const { mutate, isLoading: isMutateLoading } = useMutation(
     TicketsApi.deleteTicketType
@@ -51,6 +52,7 @@ export const TicketsTable = ({ handleEdit, ...rest }) => {
                 <TableCell>Nombre</TableCell>
                 <TableCell>Precio</TableCell>
                 <TableCell>Tipo</TableCell>
+                {isSuperAdmin && <TableCell>Empresa</TableCell>}
                 <TableCell width="115px">Acciones</TableCell>
               </TableRow>
             </TableHead>
@@ -66,6 +68,9 @@ export const TicketsTable = ({ handleEdit, ...rest }) => {
                     <TableCell>
                       {ticketType.is_public ? 'Pública' : 'Privada'}
                     </TableCell>
+                    {isSuperAdmin && (
+                      <TableCell>{ticketType.company?.name}</TableCell>
+                    )}
                     <TableCell align="right">
                       <EditButton
                         tooltipText="Editar entrada"
