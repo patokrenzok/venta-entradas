@@ -9,6 +9,7 @@ export const Switch = ({
   name,
   labelText = '',
   fullWidth = true,
+  labelPlacement = 'end',
   ...rest
 }) => {
   return (
@@ -19,13 +20,13 @@ export const Switch = ({
         defaultValue={defaultChecked}
         render={({ field }) => (
           <FormControlLabel
+            labelPlacement={labelPlacement}
             control={
               <MuiSwitch
                 ref={field.ref}
                 onChange={e => field.onChange(e.target.checked)}
-                checked={field.value || false}
+                checked={!!field.value}
                 name={name}
-                value={field.value || false}
                 {...rest}
               />
             }

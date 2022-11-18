@@ -18,4 +18,9 @@ class Company extends Model
     {
         return $this->hasMany(TicketType::class);
     }
+
+    public function paymentMethods()
+    {
+        return $this->belongsToMany(PaymentMethod::class, 'companies_payment_methods')->withTimestamps();
+    }
 }

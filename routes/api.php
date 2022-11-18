@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\PaymentMethodsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TicketTypeController;
 use App\Http\Controllers\UsersController;
@@ -31,6 +32,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('auth.superadmin')->group(function () {
         Route::apiResource('companies', CompaniesController::class);
     });
+
+    //TODO: wrap in admin middleware
+    Route::apiResource('payment-methods', PaymentMethodsController::class);
+    Route::get('/payment-methods-allowed', [PaymentMethodsController::class, 'showByCompany']);
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');

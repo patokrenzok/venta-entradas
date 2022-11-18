@@ -8,6 +8,8 @@ import { Select } from '@/components/common/Inputs/Select';
 import { useForm } from 'react-hook-form';
 import MenuItem from '@mui/material/MenuItem';
 import { useGetTicketTypes } from '@/hooks/tickets/useGetTicketTypes';
+import { useQuery } from 'react-query';
+import PaymentMethodsApi from '@/api/PaymentMethodsApi';
 
 function renderTicketTypes(data) {
   return data.map(item => (
@@ -18,6 +20,10 @@ function renderTicketTypes(data) {
 }
 
 export const SellTickets = () => {
+  const { data: paymentMethods } = useQuery(
+    ['payment-methods-allowed'],
+    PaymentMethodsApi.getAllowed
+  );
   const { data: ticketTypes } = useGetTicketTypes();
   const { control } = useForm();
 
