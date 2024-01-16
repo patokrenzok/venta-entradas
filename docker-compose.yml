@@ -20,8 +20,6 @@ services:
       XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
     volumes:
       - '.:/var/www/html'
-    networks:
-      - default  # Cambiado de 'sail' a 'default'
     depends_on:
       - mysql
   mysql:
@@ -38,16 +36,10 @@ services:
     volumes:
       - 'sail-mysql:/var/lib/mysql'
       - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
-    networks:
-      - default  # Cambiado de 'sail' a 'default'
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-p${DB_PASSWORD}']
       retries: 3
       timeout: 5s
-
-networks:
-  default:  # Cambiado de 'sail' a 'default'
-    driver: bridge
 
 volumes:
   sail-mysql:
@@ -56,4 +48,3 @@ volumes:
     driver: local
   sail-meilisearch:
     driver: local
-
